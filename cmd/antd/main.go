@@ -98,18 +98,20 @@ func main() {
 		text = strings.ToLower(text)
 		t := time.Now()
 		processCommand(text)
-		fmt.Printf("Time to process %v items: %v\n", count, time.Since(t))
+		if len(text) > 0 {
+			fmt.Printf("Time to process %v items: %v\n", count, time.Since(t))
+		}
 		count = 0
 	}
 }
 
 func processCommand(cmd string) {
-	if len(cmd) < 3 {
+	if len(cmd) < 1 {
 		return
 	}
-	if cmd[0] == 'h' {
+	if strings.Compare(cmd, "h") == 0 {
 		fmt.Println("Example command: \n\t<= 1000\n\t>=20000\n\t=50\n\t>=2000 and <= 3000")
-	} else if cmd[0] == 'a' {
+	} else if strings.Compare(cmd, "a") == 0 {
 		handler(all)
 	} else if cmd[0] == '=' {
 		input, err := strconv.Atoi(cmd[1:])
@@ -168,11 +170,13 @@ func printItem(v btree.Item) bool {
 }
 
 func handler(typeOfCommand int, input ...int) {
-	i := btree.Int(input[0])
-	if *verbose {
-		fmt.Printf("Input 1: %d\n", i)
+	var i, i2 btree.Int
+	if len(input) > 0 {
+		i = btree.Int(input[0])
+		if *verbose {
+			fmt.Printf("Input 1: %d\n", i)
+		}
 	}
-	var i2 btree.Int
 	if len(input) == 2 {
 		i2 = btree.Int(input[1])
 		fmt.Printf("Input 2: %d\n", i2)

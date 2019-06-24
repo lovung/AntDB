@@ -12,8 +12,8 @@ func main() {
 	num := flag.Int("n", 1000000, "number of items")
 	flag.Parse()
 	var slice []int
-	for i := 0; i < *num/100; i++ {
-		slice = append(slice, rand.Perm(10000)...)
+	for i := 0; i < *num/100000; i++ {
+		slice = append(slice, rand.Perm(100000)...)
 	}
 
 	golib.WriteFile(*fo, slice, len(slice))
